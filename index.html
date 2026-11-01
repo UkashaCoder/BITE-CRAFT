@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UI CRAFT – Design Anything. Build Everything.</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOGIN -->
+<section id="login" class="view active">
+  <div class="login-art">
+    <div class="logo"><span class="mark">UC</span> UI CRAFT</div>
+    <h1>Design Anything.<br>Build Everything.</h1>
+    <p>UI design, UX flows, animation and code in one studio.</p>
+  </div>
+  <div class="login-box">
+    <h2>Log in</h2>
+    <label>Email<input id="email" type="email" placeholder="you@example.com"></label>
+    <label>Password<input id="pass" type="password" placeholder="Your password"></label>
+    <label class="check"><input type="checkbox" checked> Remember me</label>
+    <button class="btn primary" id="loginBtn">Log in</button>
+    <p class="muted">Demo only: any email works. Sign up and Google login need a backend.</p>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dash" class="view">
+  <aside class="side">
+    <div class="logo"><span class="mark">UC</span> <span>UI CRAFT</span></div>
+    <nav aria-label="Main menu">
+      <button data-dp="home" class="on">Home</button><button data-dp="templates">Templates</button><button data-dp="components">Components</button>
+      <button data-dp="plans">Plans</button><button data-dp="team">Team</button><button data-dp="settings">Settings</button>
+    </nav>
+    <div class="storage"><small>Storage</small><div class="bar"><i></i></div><small>0.4 GB of 1 GB</small></div>
+  </aside>
+  <main class="dash-main">
+    <header class="topbar"><input id="dsearch" placeholder="Search projects" aria-label="Search projects"><span class="avatar" id="avatar">D</span></header>
+
+    <div class="dpage" id="dp-home">
+      <h2>Start something</h2>
+      <div class="starts">
+        <button class="start" data-go="editor"><b>UI Make</b><span>Design screens on a canvas</span></button>
+        <button class="start" data-go="editor" data-tab="proto"><b>UX Make</b><span>Link screens, map the flow, run the UX check</span></button>
+        <button class="start" data-go="editor" data-tab="code"><b>Code Make</b><span>Turn a design into HTML, CSS, JS</span></button>
+      </div>
+      <h2>Recent projects</h2>
+      <div class="projects">
+        <button class="proj" id="projCard" data-go="editor"><div class="thumb"></div><b>My Website</b><small>Edited just now</small></button>
+        <div class="proj empty"><b>No other projects</b><small>Create one above</small></div>
+      </div>
+    </div>
+
+    <div class="dpage" id="dp-templates" hidden>
+      <h2>Templates</h2><p class="muted">Pick one to start from. It replaces the open project, and Undo brings it back.</p>
+      <div class="cards" id="tplGrid"></div>
+    </div>
+
+    <div class="dpage" id="dp-components" hidden>
+      <h2>Components</h2><p class="muted">Click a component to add it to the open project.</p>
+      <div class="cards" id="compGrid"></div>
+    </div>
+
+    <div class="dpage" id="dp-plans" hidden>
+      <h2>Plans</h2>
+      <div class="seg"><button data-bill="m" class="on">Monthly</button><button data-bill="y">Yearly</button></div>
+      <div class="plans" id="planGrid"></div>
+      <p class="muted">Demo only: no payment is taken. The page limit and team seats are enforced in this app.</p>
+    </div>
+
+    <div class="dpage" id="dp-team" hidden>
+      <h2>Team</h2><p class="muted" id="seatInfo"></p>
+      <ul class="members" id="memberList"></ul>
+      <div class="invite">
+        <input id="inviteEmail" type="email" placeholder="teammate@example.com" aria-label="Teammate email">
+        <select id="inviteRole" aria-label="Role"><option>Editor</option><option>Viewer</option></select>
+        <button class="btn primary" id="inviteBtn">Invite</button>
+      </div>
+    </div>
+
+    <div class="dpage" id="dp-settings" hidden>
+      <h2>Settings</h2>
+      <div class="setbox">
+        <label>Display name<input id="setName"></label>
+        <label>Appearance<select id="setTheme"><option value="system">Match my device</option><option value="light">Light</option><option value="dark">Dark</option></select></label>
+        <label class="check"><input type="checkbox" id="setSnap"> Snap to grid by default</label>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- EDITOR -->
+<section id="editor" class="view">
+  <header class="etop">
+    <div class="logo sm"><span class="mark">UC</span></div>
+    <input id="fname" value="My Website" aria-label="File name">
+    <select id="size" aria-label="Page size"><option value="960x640">Desktop</option><option value="768x640">Tablet</option><option value="390x720">Mobile</option></select>
+    <select id="compSel" aria-label="Add component"><option value="">Add component…</option></select>
+    <div class="spacer"></div>
+    <label class="chk"><input type="checkbox" id="gridChk"> Grid</label>
+    <label class="chk"><input type="checkbox" id="wireChk"> Wireframe</label>
+    <label class="chk"><input type="checkbox" id="snapChk" checked> Snap</label>
+    <button class="btn" id="undo">Undo</button>
+    <button class="btn" id="redo">Redo</button>
+    <button class="btn" id="zout">−</button><span id="zlabel">100%</span><button class="btn" id="zin">+</button>
+    <button class="btn" id="play">Play animations</button>
+    <button class="btn" id="preview">Preview</button>
+    <button class="btn primary" id="exportBtn">Export</button>
+    <button class="btn" id="home">Home</button>
+  </header>
+  <div class="ebody">
+    <aside class="tools">
+      <button data-tool="select" class="on" title="Select (V)">▲</button>
+      <button data-tool="rect" title="Rectangle (R)">▭</button>
+      <button data-tool="ellipse" title="Circle (O)">◯</button>
+      <button data-tool="triangle" title="Triangle">△</button>
+      <button data-tool="star" title="Star">☆</button>
+      <button data-tool="line" title="Line (L)">╱</button>
+      <button data-tool="text" title="Text (T)">T</button>
+      <button data-tool="button" title="Button (B)">▣</button>
+      <button data-tool="image" title="Image upload">▨</button>
+      <input type="file" id="imgIn" accept="image/*" hidden>
+    </aside>
+    <aside class="layers">
+      <h4>Pages <button class="mini" id="addPage" title="Add page">+</button></h4>
+      <ul id="pageList"></ul>
+      <h4>Layers</h4>
+      <p class="muted hint">Shift/Ctrl+click to select many. Drag layers to reorder. Double-click to rename.</p>
+      <ul id="layerList"></ul>
+    </aside>
+    <div class="canvas-wrap" id="wrap"><div class="frame" id="frame"></div></div>
+    <aside class="props">
+      <div class="tabs">
+        <button class="on" data-tab="design">Design</button><button data-tab="anim">Animate</button><button data-tab="proto">Proto</button><button data-tab="check">Check</button><button data-tab="code">Code</button>
+      </div>
+
+      <div id="tab-design">
+        <p class="muted" id="noSel">Select a layer, or pick a tool and click the canvas.</p>
+        <div id="propForm" hidden>
+          <p class="muted" id="multiInfo" hidden></p>
+          <div class="row">
+            <button class="btn sm" id="dup">Duplicate</button><button class="btn sm" id="lockBtn">Lock</button>
+            <button class="btn sm" id="grpBtn" hidden>Group</button><button class="btn sm" id="ungrpBtn" hidden>Ungroup</button>
+          </div>
+          <div class="row">
+            <button class="btn sm" id="front" title="Bring to front (Ctrl+Shift+])">Front</button><button class="btn sm" id="fwd" title="Forward one step (Ctrl+])">Forward</button>
+            <button class="btn sm" id="bwd" title="Backward one step (Ctrl+[)">Backward</button><button class="btn sm" id="back" title="Send to back (Ctrl+Shift+[)">Back</button>
+          </div>
+          <label id="moveRow">Move to page<select id="moveSel" aria-label="Move to page"></select></label>
+          <div class="row">
+            <button class="btn sm" data-al="l">Left</button><button class="btn sm" data-al="c">Center</button><button class="btn sm" data-al="r">Right</button>
+            <button class="btn sm" data-al="t">Top</button><button class="btn sm" data-al="m">Middle</button><button class="btn sm" data-al="b">Bottom</button>
+          </div>
+          <div class="row" id="dsRow" hidden>
+            <button class="btn sm" data-ds="h">Space evenly: across</button><button class="btn sm" data-ds="v">Space evenly: down</button>
+          </div>
+          <div class="swatches" id="palette" title="Click: fill. Shift+click: text color."></div>
+          <div class="grid2" id="designFields"></div>
+          <button class="btn danger" id="del">Delete layer</button>
+        </div>
+      </div>
+
+      <div id="tab-anim" hidden>
+        <p class="muted" id="noSelA">Select a layer to animate it. Use “Play animations” at the top to see the result.</p>
+        <div class="grid2" id="animFields" hidden></div>
+      </div>
+
+      <div id="tab-proto" hidden>
+        <h4>Link this layer</h4>
+        <p class="muted" id="noSelP">Select a layer to make it jump to another page when clicked.</p>
+        <label id="linkRow" hidden>Goes to<select id="linkSel"></select></label>
+        <h4 id="protoH" hidden>Hover and transition</h4>
+        <div class="grid2" id="protoFields" hidden></div>
+        <h4>This page</h4>
+        <div class="grid2">
+          <label class="wide">Name<input id="pname"></label>
+          <label>Background<input id="pbg" type="color"></label>
+        </div>
+        <div class="row"><button class="btn sm" id="dupPage">Duplicate page</button><button class="btn sm danger-t" id="delPage">Delete page</button></div>
+        <h4>Flow map</h4>
+        <div class="flowbox" id="flow"></div>
+        <p class="muted">Arrows show which page each link opens. Click a box to open that page.</p>
+      </div>
+
+      <div id="tab-check" hidden>
+        <p class="muted">Checks the current page for contrast, small text, small touch targets, missing links and layers outside the page.</p>
+        <ul class="checks" id="checkList"></ul>
+      </div>
+
+      <div id="tab-code" hidden>
+        <div class="codetabs"><button class="on" data-c="html">HTML</button><button data-c="css">CSS</button><button data-c="js">JS</button></div>
+        <textarea id="codeOut" readonly spellcheck="false"></textarea>
+        <button class="btn" id="copyCode">Copy code</button>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- PREVIEW -->
+<dialog id="prevDlg">
+  <div class="pvbar">
+    <b>Prototype preview</b>
+    <button class="btn sm" data-dev="100%">Desktop</button><button class="btn sm" data-dev="768px">Tablet</button><button class="btn sm" data-dev="390px">Mobile</button>
+    <div class="spacer"></div><button class="btn sm" id="closePv">Close</button>
+  </div>
+  <iframe id="pvFrame" title="Prototype preview"></iframe>
+</dialog>
+
+<!-- EXPORT -->
+<dialog id="exportDlg">
+  <h3>Export center</h3>
+  <p class="muted">SVG and PNG export the page you are on. Code and ZIP include every page.</p>
+  <div class="exlist">
+    <button class="btn primary" data-ex="zip">Download ZIP (all files)</button>
+    <button class="btn" data-ex="html">Download index.html</button>
+    <button class="btn" data-ex="css">Download style.css</button>
+    <button class="btn" data-ex="js">Download script.js</button>
+    <button class="btn" data-ex="svg">Download SVG</button>
+    <button class="btn" data-ex="png">Download PNG</button>
+    <button class="btn" data-ex="json">Download project file</button>
+    <label class="btn filebtn">Open project file<input type="file" id="openIn" accept=".json" hidden></label>
+  </div>
+  <button class="btn" id="closeDlg">Close</button>
+</dialog>
+
+<script src="script.js"></script>
+</body>
+</html>
